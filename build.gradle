@@ -1,0 +1,47 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'checkstyle'
+    id 'jacoco'
+    id "com.github.hierynomus.license" version "0.13.1"
+    id 'com.github.johnrengelman.shadow' version '1.2.4'
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.gradle.plugin-publish" version "0.9.7"
+}
+
+allprojects {
+    archivesBaseName = project.name.toLowerCase()
+}
+
+sourceCompatibility = "1.${version_java}"
+targetCompatibility = "1.${version_java}"
+
+repositories {
+    jcenter()
+    maven {
+        name 'Sonatype'
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    maven {
+        name 'Spigot'
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+configurations {
+    shade
+    compile.extendsFrom shade
+}
+
+dependencies {
+    shade group: 'eu.hexagonmc', name: 'spigot-annotations', version: version_spigot_annotations
+    
+    testCompile "junit:junit:${version_junit}"
+    testCompile "com.google.truth:truth:${version_truth}"
+    testCompile "org.spigotmc:spigot-api:${version_spigot}-SNAPSHOT"
+    testCompile "net.md-5:bungeecord-api:${version_bungeecord}-SNAPSHOT"
+}
+
+apply from: 'gradle/parts.gradle'

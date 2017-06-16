@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'eu.hexagonmc.gradle.spigot.meta'
+}
+version = '1.0-SNAPSHOT'
+group = 'eu.hexagonmc'
+description = 'Test meta'
+
+spigot {
+    name "TestPlugin1"
+    dependencies {
+        test1
+        test2 {
+            type "DEPEND"
+        }
+        test3 {
+            type "SOFTDEPEND"
+        }
+        test4 {
+            type "LOADBEFORE"
+        }
+    }
+    dependency "test5"
+    dependency "test6", "SOFTDEPEND"
+    dependency("test7") {
+        type "LOADBEFORE"
+    }
+    if (dependencies().isEmpty()) {
+        throw new InvalidUserDataException()
+    }
+}
+
+bungee {
+    name "TestPlugin1"
+    dependencies {
+        test1
+        test2 {
+            type "DEPEND"
+        }
+        test3 {
+            type "SOFTDEPEND"
+        }
+        test4 {
+            type "LOADBEFORE"
+        }
+    }
+    dependency "test5"
+    dependency "test6", "SOFTDEPEND"
+    dependency("test7") {
+        type "LOADBEFORE"
+    }
+    if (dependencies().isEmpty()) {
+        throw new InvalidUserDataException()
+    }
+}

@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'eu.hexagonmc.gradle.spigot.meta'
+}
+version = '1.0-SNAPSHOT'
+group = 'eu.hexagonmc'
+description = 'Test meta'
+
+ext {
+    url = "https://hexagonmc.eu/"
+}
+
+spigot {
+    main "eu.hexagonmc.Main"
+    name "TestPlugin1"
+    if (!name().equals("TestPlugin1")) {
+        throw new InvalidUserDataException()
+    }
+    if (!getName().equals("TestPlugin1")) {
+        throw new InvalidUserDataException()
+    }
+    description "Another test plugin"
+    if (!description().equals("Another test plugin")) {
+        throw new InvalidUserDataException()
+    }
+    version "1.2-SNAPSHOT"
+    if (!version().equals("1.2-SNAPSHOT")) {
+        throw new InvalidUserDataException()
+    }
+    author "Zartec"
+    author "ghac"
+    load "STARTUP"
+    website "https://hexagonmc.eu/"
+    database false
+    prefix "TP1"
+}
+
+bungee {
+    main "eu.hexagonmc.Main"
+    name "TestPlugin1"
+    if (!name().equals("TestPlugin1")) {
+        throw new InvalidUserDataException()
+    }
+    description "Another test plugin"
+    if (!description().equals("Another test plugin")) {
+        throw new InvalidUserDataException()
+    }
+    version "1.2-SNAPSHOT"
+    if (!version().equals("1.2-SNAPSHOT")) {
+        throw new InvalidUserDataException()
+    }
+    author "Zartec"
+    
+}

@@ -1,0 +1,24 @@
+plugins {
+    id 'eu.hexagonmc.gradle.spigot'
+    id 'eu.hexagonmc.gradle.spigot.meta'
+}
+version = '1.0-SNAPSHOT'
+group = 'eu.hexagonmc'
+description = 'Test meta'
+
+repositories {
+    jcenter()
+    maven {
+        name 'Sonatype'
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    maven {
+        name 'Spigot'
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    compile "org.spigotmc:spigot-api:${version_spigot}-SNAPSHOT"
+    compile "net.md-5:bungeecord-api:${version_bungeecord}-SNAPSHOT"
+}

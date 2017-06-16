@@ -1,0 +1,21 @@
+
+def year = Calendar.getInstance().get(Calendar.YEAR)
+if (year != Integer.valueOf(project.year)) {
+    year = project.year + ' - ' + year
+}
+
+def copyrightFormat = "Copyright (C) %s  %s <%s>"
+def copyright = String.format(copyrightFormat, year, project.organization, project.organization_url)
+for (def developer : project.developers) {
+    copyright += '\n' + String.format(copyrightFormat, year, developer.name, developer.email)
+}
+
+license {
+    header file('config/license/HEADER')
+    strictCheck true
+    exclude '**/*.yml'
+    exclude '**/*.gradle'
+    exclude '**/javax.annotation.processing.Processor'
+    ext.copyright = copyright
+    ext.name = name
+}

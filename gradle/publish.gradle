@@ -1,0 +1,97 @@
+
+publishing {
+    repositories {
+        if (project.hasProperty('mavenRepo') || System.getenv('MAVEN_REPO') != null) {
+            maven {
+                credentials {
+                    username project.hasProperty('mavenUser') ? project.property('mavenUser') : System.getenv('MAVEN_USER')
+                    password project.hasProperty('mavenPass') ? project.property('mavenPass') : System.getenv("MAVEN_PASS")
+                }
+                url project.hasProperty('mavenRepo') ? project.property('mavenRepo') : System.getenv("MAVEN_REPO")
+            }
+        }
+    }
+    publications {
+        Java(MavenPublication) {
+            groupId project.group
+            artifactId project.name.toLowerCase()
+            version project.version
+            
+            artifact shadowJar
+            artifact sourcesJar
+            artifact javadocJar
+            
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    description project.description
+                    name project.name
+                    url 'https://github.com/' + project.github
+                    licenses {
+                        license {
+                            name "GNU General Public License (GPL)"
+                            url "http://www.gnu.org/licenses/gpl.txt"
+                            distribution "repo"
+                        }
+                    }
+                    developers {
+                        for (def dev : developers) {
+                            developer {
+                                id dev.name.toLowerCase()
+                                name dev.name
+                                email dev.email
+                                organization organization
+                                organizationUrl organization_url
+                            }
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/' + project.github + '.git'
+                        developerConnection 'scm:git:ssh://github.com:' + project.github + '.git'
+                        url 'https://github.com/' + project.github + '/tree/master'
+                    }
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    
+    if(!user || !key)
+    {
+        throw new RuntimeException("Bintray user and/or key are not defined via environment or properties")
+    }
+    
+    publications = ['Java']
+    override = true
+    publish = true
+    pkg {
+        repo = 'Spigot'
+        name = project.name
+        userOrg = 'hexagonmc'
+        desc = project.description
+        websiteUrl = 'https://github.com/' + project.github
+        issueTrackerUrl = 'https://github.com/' + project.github + '/issues'
+        vcsUrl = 'https://github.com/' + project.github + '.git'
+        licenses = ['GPL-3.0']
+        publicDownloadNumbers = true
+        githubRepo = project.github
+        githubReleaseNotesFile = 'README.md'
+        version {
+            name = project.version
+            released = new Date()
+            vcsTag = project.version
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = false
+                user = project.hasProperty('ossUser') ? project.property('ossUser') : System.getenv('OSS_USER')
+                password = project.hasProperty('ossPass') ? project.property('ossPass') : System.getenv('OSS_PASS')
+            }
+        }
+    }
+}

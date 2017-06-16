@@ -1,0 +1,49 @@
+
+gradlePlugin {
+    plugins {
+        spigotPlugin {
+            id = 'eu.hexagonmc.gradle.spigot'
+            implementationClass = 'eu.hexagonmc.spigot.gradle.SpigotGradlePlugin'
+        }
+    }
+    plugins {
+        spigotAnnotationPlugin {
+            id = 'eu.hexagonmc.gradle.spigot.annotation'
+            implementationClass = 'eu.hexagonmc.spigot.gradle.SpigotAnnotationPlugin'
+        }
+    }
+    plugins {
+        spigotMetaPlugin {
+            id = 'eu.hexagonmc.gradle.spigot.meta'
+            implementationClass = 'eu.hexagonmc.spigot.gradle.meta.MetadataPlugin'
+        }
+    }
+}
+
+task setupPublishPlugins << {
+    def key= project.hasProperty('gradleKey') ? project.property('gradleKey') : System.getenv('GRADLE_KEY')
+    def secret = project.hasProperty('gradleSecret') ? project.property('gradleSecret') : System.getenv('GRADLE_SECRET')
+
+    if(!key || !secret)
+    {
+        throw new RuntimeException("Gradle key and/or secret are not defined via environment or properties")
+    }
+
+    System.properties.setProperty("gradle.publish.key", key)
+    System.properties.setProperty("gradle.publish.secret", secret)
+}
+
+pluginBundle {
+    website = 'https://github.com/' + project.github
+    vcsUrl = 'https://github.com/' + project.github + '.git'
+    description = project.description
+    plugins {
+        spigotPlugin {
+            id = 'eu.hexagonmc.gradle.spigot'
+            displayName = 'Spigot-Gradle'
+            tags = ['Spigot', 'BungeeCord', 'Bungee', 'Plugin', 'Annotation', 'Processor' ]
+        }
+    }
+}
+
+tasks.publishPlugins.dependsOn tasks.setupPublishPlugins

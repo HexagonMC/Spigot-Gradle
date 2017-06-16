@@ -1,0 +1,21 @@
+
+javadoc {
+    dependsOn checkstyleMain
+    options.encoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+    options.links(
+            "https://docs.gradle.org/${version_gradle}/javadoc/",
+            "https://docs.oracle.com/javase/${version_java}/docs/api/"
+    )
+
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+}

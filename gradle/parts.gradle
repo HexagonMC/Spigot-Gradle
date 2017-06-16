@@ -1,0 +1,17 @@
+
+apply from: 'gradle/jar.gradle'
+
+def slurper = new groovy.json.JsonSlurper()
+project.ext.developers = slurper.parseText(project.developers)
+
+apply from: 'gradle/plugin.gradle'
+apply from: 'gradle/license.gradle'
+apply from: 'gradle/sources.gradle'
+apply from: 'gradle/checkstyle.gradle'
+apply from: 'gradle/javadoc.gradle'
+apply from: 'gradle/test.gradle'
+apply from: 'gradle/publish.gradle'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = project.version_gradle
+}

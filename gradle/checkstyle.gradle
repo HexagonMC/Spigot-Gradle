@@ -1,0 +1,11 @@
+
+checkstyle {
+    toolVersion = '7.2'
+    configFile = file('config/checkstyle/checkstyle.xml')
+    configProperties = [
+            'basedir': project.projectDir,
+            'suppressions': file('checkstyle-suppressions.xml'),
+            'severity': 'warning'
+    ]
+    reportsDir = file('build')
+}
