@@ -20,7 +20,7 @@ gradlePlugin {
     }
 }
 
-task setupPublishPlugins << {
+task("setupPublishPlugins").doLast {
     def key= project.hasProperty('gradleKey') ? project.property('gradleKey') : System.getenv('GRADLE_KEY')
     def secret = project.hasProperty('gradleSecret') ? project.property('gradleSecret') : System.getenv('GRADLE_SECRET')
 

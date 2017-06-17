@@ -24,6 +24,7 @@ package eu.hexagonmc.spigot.gradle;
 
 import eu.hexagonmc.spigot.annotation.meta.DependencyType;
 import eu.hexagonmc.spigot.annotation.meta.LoadOn;
+import eu.hexagonmc.spigot.annotation.meta.PermissionDefault;
 import groovy.lang.Closure;
 
 import java.io.IOException;
@@ -116,6 +117,28 @@ public class SpigotGradle {
             return resolveType(((Closure<?>) object).call());
         }
         return DependencyType.valueOf(object.toString());
+    }
+
+    /**
+     * Resolves the given {@link Object} to the enum {@link PermissionDefault}.
+     * 
+     * @param object The {@link Object} to process
+     * @return The resolved enum {@link PermissionDefault}
+     */
+    public static PermissionDefault resolveDefault(Object object) {
+        if (object == null) {
+            return null;
+        }
+        if (object instanceof String) {
+            return PermissionDefault.valueOf((String) object);
+        }
+        if (object instanceof PermissionDefault) {
+            return (PermissionDefault) object;
+        }
+        if (object instanceof Closure) {
+            return resolveDefault(((Closure<?>) object).call());
+        }
+        return PermissionDefault.valueOf(object.toString());
     }
 
     /**

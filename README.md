@@ -55,6 +55,58 @@ spigot {
     dependency("Vault") {
         type "LOADBEFORE"
     }
+    commands {
+        test1
+        test2 {
+            description "A test command"
+            alias "test2.1"
+            alias "test2.2"
+            permission "command.test2"
+            usage "/<command>"
+        }
+    }
+    command "test3"
+    command("test4") {
+        description "A test command"
+        alias "test4.1"
+        alias "test4.2"
+        permission "command.test4"
+        usage "/<command>"
+    }
+    permissions {
+        "command.test1" {}
+        "command.test2" {
+            description "A test permission"
+            value "OP"
+            childs {
+                "command.test2.1"
+                "command.test2.2" {
+                    value false
+                }
+            }
+            child "command.test2.3"
+            child "command.test2.4", false
+            child("command.test2.5") {
+                value false
+            }
+        }
+    }
+    permission "command.test3"
+    permission("command.test4") {
+        description "A test permission"
+            value "OP"
+            childs {
+                "command.test4.1"
+                "command.test4.2" {
+                    value false
+                }
+            }
+            child "command.test4.3"
+            child "command.test4.4", false
+            child("command.test4.5") {
+                value false
+            }
+    }
 }
 ```
 

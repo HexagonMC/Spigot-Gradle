@@ -189,6 +189,7 @@ public class SpigotMetaPluginTest {
         File spigotYml = new File(generateMetadataDir, "plugin.yml");
         assertWithMessage("plugin.yml file was not generated").that(spigotYml.exists()).isTrue();
         lines = Files.readAllLines(spigotYml.toPath(), Charsets.UTF_8);
+        lines.forEach(System.err::println);
         assertThat(lines.get(2)).endsWith("TestPlugin1");
         assertThat(lines.get(3)).endsWith("1.2-SNAPSHOT");
         assertThat(lines.get(4)).endsWith("Another test plugin");

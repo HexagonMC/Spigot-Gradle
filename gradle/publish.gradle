@@ -60,11 +60,6 @@ bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
     key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
     
-    if(!user || !key)
-    {
-        throw new RuntimeException("Bintray user and/or key are not defined via environment or properties")
-    }
-    
     publications = ['Java']
     override = true
     publish = true
