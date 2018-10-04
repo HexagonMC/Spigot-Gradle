@@ -5,10 +5,10 @@ plugins {
     id 'maven-publish'
     id 'checkstyle'
     id 'jacoco'
-    id "com.github.hierynomus.license" version "0.13.1"
-    id 'com.github.johnrengelman.shadow' version '1.2.4'
-    id "com.jfrog.bintray" version "1.7.3"
-    id "com.gradle.plugin-publish" version "0.9.7"
+    id "com.github.hierynomus.license" version "0.14.0"
+    id 'com.github.johnrengelman.shadow' version '4.0.1'
+    id "com.jfrog.bintray" version "1.8.4"
+    id "com.gradle.plugin-publish" version "0.10.0"
 }
 
 allprojects {
@@ -37,7 +37,7 @@ configurations {
 
 dependencies {
     shade group: 'eu.hexagonmc', name: 'spigot-annotations', version: version_spigot_annotations
-    
+
     testCompile "junit:junit:${version_junit}"
     testCompile "com.google.truth:truth:${version_truth}"
     testCompile "org.spigotmc:spigot-api:${version_spigot}-SNAPSHOT"

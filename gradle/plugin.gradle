@@ -4,18 +4,24 @@ gradlePlugin {
         spigotPlugin {
             id = 'eu.hexagonmc.gradle.spigot'
             implementationClass = 'eu.hexagonmc.spigot.gradle.SpigotGradlePlugin'
+            displayName = 'Spigot Plugin'
+            description = 'Automatically generates Spigot metadata files (plugin.yml and bungee.yml) from project extensions and annotation processor'
         }
     }
     plugins {
         spigotAnnotationPlugin {
             id = 'eu.hexagonmc.gradle.spigot.annotation'
             implementationClass = 'eu.hexagonmc.spigot.gradle.SpigotAnnotationPlugin'
+            displayName = 'Spigot Plugin Annotations'
+            description = 'Generates Spigot metadata files (plugin.yml and bungee.yml) from source code using Spigot-Annotations project'
         }
     }
     plugins {
         spigotMetaPlugin {
             id = 'eu.hexagonmc.gradle.spigot.meta'
             implementationClass = 'eu.hexagonmc.spigot.gradle.meta.MetadataPlugin'
+            displayName = 'Spigot Plugin Metadata'
+            description = 'Merges metadata files (plugin.yml and bungee.yml) from annotation processor and project extensions'
         }
     }
 }
@@ -37,11 +43,11 @@ pluginBundle {
     website = 'https://github.com/' + project.github
     vcsUrl = 'https://github.com/' + project.github + '.git'
     description = project.description
+    tags = ['Spigot', 'BungeeCord', 'Bungee', 'Plugin', 'Annotation', 'Processor' ]
     plugins {
         spigotPlugin {
             id = 'eu.hexagonmc.gradle.spigot'
             displayName = 'Spigot-Gradle'
-            tags = ['Spigot', 'BungeeCord', 'Bungee', 'Plugin', 'Annotation', 'Processor' ]
         }
     }
 }

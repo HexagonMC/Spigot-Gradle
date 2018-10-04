@@ -1,7 +1,7 @@
 /**
  *
- * Copyright (C) 2017  HexagonMc <https://github.com/HexagonMC>
- * Copyright (C) 2017  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
+Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -36,9 +36,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
@@ -52,13 +50,13 @@ public class SpigotMetaPluginTest {
     @Before
     public void setup() throws IOException {
         _buildFile = _testProjectDir.newFile("build.gradle");
-        writeFile(_testProjectDir.newFile("gradle.properties"), _gradleProperties.getContent());
-        writeFile(_testProjectDir.newFile("settings.gradle"), Resources.toString(Resources.getResource("settings.gradle"), Charsets.UTF_8));
+        TestUtil.writeFile(_testProjectDir.newFile("gradle.properties"), _gradleProperties.getContent());
+        TestUtil.writeFile(_testProjectDir.newFile("settings.gradle"), Resources.toString(Resources.getResource("settings.gradle"), Charsets.UTF_8));
     }
 
     @Test
     public void testGenerateMetadata() throws IOException {
-        writeFile(_buildFile, Resources.toString(Resources.getResource("meta-base.gradle"), Charsets.UTF_8));
+        TestUtil.writeFile(_buildFile, Resources.toString(Resources.getResource("meta-base.gradle"), Charsets.UTF_8));
 
         BuildResult result = GradleRunner.create()
                 .withProjectDir(_testProjectDir.getRoot())
@@ -88,7 +86,7 @@ public class SpigotMetaPluginTest {
 
     @Test
     public void testGenerateMetadataWithDependencies() throws IOException {
-        writeFile(_buildFile, Resources.toString(Resources.getResource("meta-dependency.gradle"), Charsets.UTF_8));
+        TestUtil.writeFile(_buildFile, Resources.toString(Resources.getResource("meta-dependency.gradle"), Charsets.UTF_8));
 
         BuildResult result = GradleRunner.create()
                 .withProjectDir(_testProjectDir.getRoot())
@@ -132,11 +130,11 @@ public class SpigotMetaPluginTest {
 
     @Test
     public void testGenerateMetadataWithExisting() throws IOException {
-        writeFile(_buildFile, Resources.toString(Resources.getResource("meta-base.gradle"), Charsets.UTF_8));
+        TestUtil.writeFile(_buildFile, Resources.toString(Resources.getResource("meta-base.gradle"), Charsets.UTF_8));
         File resourceDir = new File(_testProjectDir.getRoot(), "src/main/resources");
         resourceDir.mkdirs();
-        writeFile(new File(resourceDir, "bungee.yml"), Resources.toString(Resources.getResource("bungee.yml"), Charsets.UTF_8));
-        writeFile(new File(resourceDir, "plugin.yml"), Resources.toString(Resources.getResource("plugin.yml"), Charsets.UTF_8));
+        TestUtil.writeFile(new File(resourceDir, "bungee.yml"), Resources.toString(Resources.getResource("bungee.yml"), Charsets.UTF_8));
+        TestUtil.writeFile(new File(resourceDir, "plugin.yml"), Resources.toString(Resources.getResource("plugin.yml"), Charsets.UTF_8));
 
         BuildResult result = GradleRunner.create()
                 .withProjectDir(_testProjectDir.getRoot())
@@ -166,7 +164,7 @@ public class SpigotMetaPluginTest {
 
     @Test
     public void testGenerateMetadataDetail() throws IOException {
-        writeFile(_buildFile, Resources.toString(Resources.getResource("meta-detail.gradle"), Charsets.UTF_8));
+        TestUtil.writeFile(_buildFile, Resources.toString(Resources.getResource("meta-detail.gradle"), Charsets.UTF_8));
 
         BuildResult result = GradleRunner.create()
                 .withProjectDir(_testProjectDir.getRoot())
@@ -189,7 +187,6 @@ public class SpigotMetaPluginTest {
         File spigotYml = new File(generateMetadataDir, "plugin.yml");
         assertWithMessage("plugin.yml file was not generated").that(spigotYml.exists()).isTrue();
         lines = Files.readAllLines(spigotYml.toPath(), Charsets.UTF_8);
-        lines.forEach(System.err::println);
         assertThat(lines.get(2)).endsWith("TestPlugin1");
         assertThat(lines.get(3)).endsWith("1.2-SNAPSHOT");
         assertThat(lines.get(4)).endsWith("Another test plugin");
@@ -200,17 +197,5 @@ public class SpigotMetaPluginTest {
         assertThat(lines.get(10)).endsWith("eu.hexagonmc.Main");
         assertThat(lines.get(11)).endsWith("false");
         assertThat(lines.get(12)).endsWith("TP1");
-    }
-
-    private static void writeFile(File destination, String content) throws IOException {
-        BufferedWriter output = null;
-        try {
-            output = new BufferedWriter(new FileWriter(destination));
-            output.write(content);
-        } finally {
-            if (output != null) {
-                output.close();
-            }
-        }
     }
 }

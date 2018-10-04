@@ -1,7 +1,7 @@
 /**
  *
- * Copyright (C) 2017  HexagonMc <https://github.com/HexagonMC>
- * Copyright (C) 2017  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
+Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -43,6 +43,7 @@ import java.util.jar.Manifest;
 public class SpigotGradlePlugin implements Plugin<Project> {
 
     private Project _project;
+    private static boolean _once = false;
 
     @Override
     public void apply(Project project) {
@@ -88,6 +89,9 @@ public class SpigotGradlePlugin implements Plugin<Project> {
     }
 
     private void applyAfterEvaluate() {
+        if (_once) {
+            return;
+        }
         _project.afterEvaluate(project -> {
             Logger logger = project.getLogger();
             Package pck = getClass().getPackage();
@@ -124,6 +128,7 @@ public class SpigotGradlePlugin implements Plugin<Project> {
             logger.lifecycle("#{}#", formatCenterString(" ", ' ', size));
             logger.lifecycle("#{}#", formatCenterString("#", '#', size));
         });
+        _once = true;
     }
 
     private String formatCenterString(String content, char filler, int length) {

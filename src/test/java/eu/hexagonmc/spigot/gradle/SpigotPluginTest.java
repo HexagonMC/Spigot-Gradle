@@ -1,7 +1,7 @@
 /**
  *
- * Copyright (C) 2017  HexagonMc <https://github.com/HexagonMC>
- * Copyright (C) 2017  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
+Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -36,9 +36,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
@@ -52,17 +50,20 @@ public class SpigotPluginTest {
     @Before
     public void setup() throws IOException {
         _buildFile = _testProjectDir.newFile("build.gradle");
-        writeFile(_testProjectDir.newFile("gradle.properties"), _gradleProperties.getContent());
-        writeFile(_testProjectDir.newFile("settings.gradle"), Resources.toString(Resources.getResource("settings.gradle"), Charsets.UTF_8));
+        TestUtil.writeFile(_testProjectDir.newFile("gradle.properties"), _gradleProperties.getContent());
+        TestUtil.writeFile(_testProjectDir.newFile("settings.gradle"),
+                Resources.toString(Resources.getResource("settings.gradle"), Charsets.UTF_8));
     }
 
     @Test
-    public void testGenerateMetadata() throws IOException {
-        writeFile(_buildFile, Resources.toString(Resources.getResource("base.gradle"), Charsets.UTF_8));
+    public void testGenerateMetadata() throws Exception {
+        TestUtil.writeFile(_buildFile, Resources.toString(Resources.getResource("base.gradle"), Charsets.UTF_8));
         File sourceDir = new File(_testProjectDir.getRoot(), "src/main/java/eu/hexagonmc/testplugin");
         sourceDir.mkdirs();
-        writeFile(new File(sourceDir, "TestBungeePlugin.java"), Resources.toString(Resources.getResource("TestBungeePlugin.java"), Charsets.UTF_8));
-        writeFile(new File(sourceDir, "TestSpigotPlugin.java"), Resources.toString(Resources.getResource("TestSpigotPlugin.java"), Charsets.UTF_8));
+        TestUtil.writeFile(new File(sourceDir, "TestBungeePlugin.java"),
+                Resources.toString(Resources.getResource("TestBungeePlugin.java"), Charsets.UTF_8));
+        TestUtil.writeFile(new File(sourceDir, "TestSpigotPlugin.java"),
+                Resources.toString(Resources.getResource("TestSpigotPlugin.java"), Charsets.UTF_8));
 
         BuildResult result = GradleRunner.create()
                 .withProjectDir(_testProjectDir.getRoot())
@@ -71,9 +72,7 @@ public class SpigotPluginTest {
                 .build();
 
         assertThat(result.task(":generateMetadata").getOutcome()).isEqualTo(SUCCESS);
-        File generateMetadataDir = new File(_testProjectDir.getRoot(), "build/tmp/generateMetadata");
-        assertWithMessage("generateMetadata dir was not generated").that(generateMetadataDir.exists()).isTrue();
-        File bungeeYml = new File(generateMetadataDir, "bungee.yml");
+        File bungeeYml = new File(_testProjectDir.getRoot(), "build/classes/java/main/bungee.yml");
         assertWithMessage("bungee.yml file was not generated").that(bungeeYml.exists()).isTrue();
         List<String> lines;
         lines = Files.readAllLines(bungeeYml.toPath(), Charsets.UTF_8);
@@ -81,24 +80,12 @@ public class SpigotPluginTest {
         assertThat(lines.get(3)).endsWith("1.0-SNAPSHOT");
         assertThat(lines.get(4)).endsWith("Test meta");
         assertThat(lines.get(5)).endsWith("TestBungeePlugin");
-        File spigotYml = new File(generateMetadataDir, "plugin.yml");
+        File spigotYml = new File(_testProjectDir.getRoot(), "build/classes/java/main/plugin.yml");
         assertWithMessage("plugin.yml file was not generated").that(spigotYml.exists()).isTrue();
         lines = Files.readAllLines(spigotYml.toPath(), Charsets.UTF_8);
         assertThat(lines.get(2)).endsWith("TestPlugin");
         assertThat(lines.get(3)).endsWith("1.0-SNAPSHOT");
         assertThat(lines.get(4)).endsWith("Test meta");
         assertThat(lines.get(5)).endsWith("TestSpigotPlugin");
-    }
-
-    private static void writeFile(File destination, String content) throws IOException {
-        BufferedWriter output = null;
-        try {
-            output = new BufferedWriter(new FileWriter(destination));
-            output.write(content);
-        } finally {
-            if (output != null) {
-                output.close();
-            }
-        }
     }
 }

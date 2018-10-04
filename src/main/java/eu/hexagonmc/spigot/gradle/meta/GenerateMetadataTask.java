@@ -1,7 +1,7 @@
 /**
  *
- * Copyright (C) 2017  HexagonMc <https://github.com/HexagonMC>
- * Copyright (C) 2017  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
+Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -27,30 +27,43 @@ import eu.hexagonmc.spigot.annotation.meta.PluginYml;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.specs.Specs;
 import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskAction;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class GenerateMetadataTask extends DefaultTask {
 
+    private boolean _mergeMetadata = true;
+
+    private Supplier<PluginMetadata> _providerSpigot = () -> null;
+    private Supplier<PluginMetadata> _providerBungee = () -> null;
+
     private Path _targetSpigot;
     private Path _targetBungee;
 
-    private boolean _mergeMetadata = true;
+    private List<Path> _metadataFilesSpigot = new ArrayList<>();
+    private List<Path> _metadataFilesBungee = new ArrayList<>();
 
-    private Path _metadataFileSpigot;
-    private Path _metadataFileBungee;
-    private Supplier<PluginMetadata> _supplierSpigot;
-    private Supplier<PluginMetadata> _supplierBungee;
+    /**
+     * Constructor sets task never up to date.
+     */
+    public GenerateMetadataTask() {
+        getOutputs().upToDateWhen(Specs.satisfyNone());
+    }
 
     /**
      * Enables or disables the merging of available {@link PluginMetadata}
      * sources.
-     * 
+     *
      * @param state True to enable false otherwise
      */
     public void setMergeMetadata(boolean state) {
@@ -58,48 +71,46 @@ public class GenerateMetadataTask extends DefaultTask {
     }
 
     /**
-     * Sets an supplier that returns an existing spigot {@link PluginMetadata}.
-     * 
+     * Sets an supplier that returns existing spigot {@link PluginMetadata}.
+     *
      * @param supplier The supplier
      */
-    public void setSupplierSpigot(Supplier<PluginMetadata> supplier) {
-        _supplierSpigot = supplier;
+    public void setProviderSpigot(Supplier<PluginMetadata> supplier) {
+        _providerSpigot = supplier;
     }
 
     /**
      * Returns the supplied {@link PluginMetadata} from the supplier set by
-     * {@link #setSupplierSpigot(Supplier)}.
-     * 
+     * {@link #setProviderSpigot(Supplier)}.
+     *
      * @return The {@link PluginMetadata}
      */
-    @Internal
     private PluginMetadata getMetadataSpigot() {
-        return _supplierSpigot.get();
+        return _providerSpigot.get();
     }
 
     /**
-     * Sets an supplier that returns an existing bungee {@link PluginMetadata}.
-     * 
+     * Sets an supplier that returns existing bungee {@link PluginMetadata}.
+     *
      * @param supplier The supplier
      */
-    public void setSupplierBungee(Supplier<PluginMetadata> supplier) {
-        _supplierBungee = supplier;
+    public void setProviderBungee(Supplier<PluginMetadata> supplier) {
+        _providerBungee = supplier;
     }
 
     /**
      * Returns the supplied {@link PluginMetadata} from the supplier set by
-     * {@link #setSupplierBungee(Supplier)}.
-     * 
+     * {@link #setProviderBungee(Supplier)}.
+     *
      * @return The {@link PluginMetadata}
      */
-    @Internal
     private PluginMetadata getMetadataBungee() {
-        return _supplierBungee.get();
+        return _providerBungee.get();
     }
 
     /**
      * Gets the {@link Path} for the generated spigot {@link PluginMetadata}.
-     * 
+     *
      * @return The {@link Path}
      */
     @Internal
@@ -111,8 +122,18 @@ public class GenerateMetadataTask extends DefaultTask {
     }
 
     /**
+     * Gets the spigot output file.
+     *
+     * @return The output file
+     */
+    @OutputFile
+    public File getOuputFileSpigot() {
+        return getTargetSpigot().toFile();
+    }
+
+    /**
      * Gets the {@link Path} for the generated bungee {@link PluginMetadata}.
-     * 
+     *
      * @return The {@link Path}
      */
     @Internal
@@ -124,25 +145,35 @@ public class GenerateMetadataTask extends DefaultTask {
     }
 
     /**
-     * Gets the @{@link Path} to the spigot {@link PluginMetadata} resolved by
-     * {@link #findExtraMetadataFiles(SourceSet)}.
-     * 
-     * @return The {@link Path}
+     * Gets the bungee output file.
+     *
+     * @return The output file
      */
-    @Internal
-    public Path getMetadataFileSpigot() {
-        return _metadataFileSpigot;
+    @OutputFile
+    public File getOuputFileBungee() {
+        return getTargetBungee().toFile();
     }
 
     /**
-     * Gets the @{@link Path} to the bungee {@link PluginMetadata} resolved by
+     * Gets the {@link Path}'s to the spigot {@link PluginMetadata} resolved by
      * {@link #findExtraMetadataFiles(SourceSet)}.
-     * 
-     * @return The {@link Path}
+     *
+     * @return The {@link Path}'s
      */
     @Internal
-    public Path getMetadataFileBungee() {
-        return _metadataFileBungee;
+    public List<Path> getMetadataFilesSpigot() {
+        return _metadataFilesSpigot;
+    }
+
+    /**
+     * Gets the {@link Path}'s to the bungee {@link PluginMetadata} resolved by
+     * {@link #findExtraMetadataFiles(SourceSet)}.
+     *
+     * @return The {@link Path}'s
+     */
+    @Internal
+    public List<Path> getMetadataFilesBungee() {
+        return _metadataFilesBungee;
     }
 
     /**
@@ -154,43 +185,49 @@ public class GenerateMetadataTask extends DefaultTask {
         findExtraMetadataFiles(java.getSourceSets().getByName("main"));
 
         PluginMetadata metaDataSpigot = getMetadataSpigot();
-        if (_mergeMetadata && _metadataFileSpigot != null) {
-            PluginMetadata metaData = PluginYml.read(_metadataFileSpigot);
-            if (metaData.getName().equals(metaDataSpigot.getName())) {
-                metaDataSpigot.accept(metaData);
+        if (_mergeMetadata) {
+            for (Path path : _metadataFilesSpigot) {
+                PluginMetadata metaData = PluginYml.read(path);
+                if (metaDataSpigot == null) {
+                    metaDataSpigot = metaData;
+                } else {
+                    metaDataSpigot.accept(metaData);
+                }
             }
         }
-
         PluginYml.write(getTargetSpigot(), metaDataSpigot);
 
         PluginMetadata metaDataBungee = getMetadataBungee();
-        if (_mergeMetadata && _metadataFileBungee != null) {
-            PluginMetadata metaData = PluginYml.read(_metadataFileBungee);
-            if (metaData.getName().equals(metaDataBungee.getName())) {
-                metaDataBungee.accept(metaData);
+        if (_mergeMetadata) {
+            for (Path path : _metadataFilesBungee) {
+                PluginMetadata metaData = PluginYml.read(path);
+                if (metaDataBungee == null) {
+                    metaDataBungee = metaData;
+                } else {
+                    metaDataBungee.accept(metaData);
+                }
             }
         }
-
         PluginYml.write(getTargetBungee(), metaDataBungee);
     }
 
     /**
      * Searches in projects resources for existing plugin.yml und bungee.yml
      * files.
-     * 
+     *
      * @param sourceSet The {@link SourceSet} to search in
      */
     private void findExtraMetadataFiles(SourceSet sourceSet) {
         FileTree files;
         files = sourceSet.getResources()
                 .matching(filterable -> filterable.include(PluginYml.FILENAME_SPIGOT));
-        if (!files.isEmpty()) {
-            _metadataFileSpigot = files.getSingleFile().toPath();
+        for (File file : files.getFiles()) {
+            _metadataFilesSpigot.add(file.toPath().toAbsolutePath());
         }
         files = sourceSet.getResources()
                 .matching(filterable -> filterable.include(PluginYml.FILENAME_BUNGEE));
-        if (!files.isEmpty()) {
-            _metadataFileBungee = files.getSingleFile().toPath();
+        for (File file : files.getFiles()) {
+            _metadataFilesBungee.add(file.toPath().toAbsolutePath());
         }
     }
 }

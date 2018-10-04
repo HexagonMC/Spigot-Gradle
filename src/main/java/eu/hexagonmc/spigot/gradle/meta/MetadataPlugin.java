@@ -1,7 +1,7 @@
 /**
  *
- * Copyright (C) 2017  HexagonMc <https://github.com/HexagonMC>
- * Copyright (C) 2017  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
+Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -57,22 +57,20 @@ public class MetadataPlugin implements Plugin<Project> {
         TaskContainer tasks = project.getTasks();
         GenerateMetadataTask genMeta = tasks.create("generateMetadata", GenerateMetadataTask.class);
 
-        genMeta.setSupplierSpigot(() -> {
+        genMeta.setProviderSpigot(() -> {
             PluginMetadata meta = new PluginMetadata(spigotExtension.name());
             spigotExtension.accept(meta);
             return meta;
         });
 
-        genMeta.setSupplierBungee(() -> {
+        genMeta.setProviderBungee(() -> {
             PluginMetadata meta = new PluginMetadata(bungeeExtension.name());
             bungeeExtension.accept(meta);
             return meta;
         });
 
         Task processResources = tasks.getByName("processResources");
-        processResources.dependsOn(genMeta);
         CopySpec processResourcesCopySepc = (CopySpec) processResources;
-        processResourcesCopySepc.from(genMeta.getTargetSpigot().toFile());
-        processResourcesCopySepc.from(genMeta.getTargetBungee().toFile());
+        processResourcesCopySepc.from(genMeta);
     }
 }

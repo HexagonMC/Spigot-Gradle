@@ -1,7 +1,7 @@
 /**
  *
- * Copyright (C) 2017  HexagonMc <https://github.com/HexagonMC>
- * Copyright (C) 2017  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
+Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -24,15 +24,20 @@ package eu.hexagonmc.spigot.gradle;
 
 import com.google.common.base.Joiner;
 import eu.hexagonmc.spigot.annotation.AnnotationProcessor;
+import eu.hexagonmc.spigot.annotation.meta.PluginYml;
 import eu.hexagonmc.spigot.gradle.meta.GenerateMetadataTask;
 import eu.hexagonmc.spigot.gradle.meta.MetadataPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.compile.JavaCompile;
 
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SpigotAnnotationPlugin implements Plugin<Project> {
 
@@ -46,7 +51,7 @@ public class SpigotAnnotationPlugin implements Plugin<Project> {
         generateMetadata.setMergeMetadata(false);
 
         Task compileJava = project.getTasks().getByName("compileJava");
-        compileJava.dependsOn(generateMetadata);
+        compileJava.getInputs().files(generateMetadata);
         compileJava.doFirst(task -> {
             JavaCompile javac = (JavaCompile) task;
             List<String> args = javac.getOptions().getCompilerArgs();
@@ -59,18 +64,21 @@ public class SpigotAnnotationPlugin implements Plugin<Project> {
             Path targetSpigot = generateMetadata.getTargetSpigot();
             Path targetBungee = generateMetadata.getTargetBungee();
 
-            String[] extraFilesSpigot = {targetSpigot.toString(),
-                    generateMetadata.getMetadataFileSpigot() == null ? null : generateMetadata.getMetadataFileSpigot().toString()};
-            String[] extraFilesBungee = {targetBungee.toString(),
-                    generateMetadata.getMetadataFileBungee() == null ? null : generateMetadata.getMetadataFileBungee().toString()};
+            Set<String> extraFilesSpigot = new HashSet<>();
+            extraFilesSpigot.add(targetSpigot.toString());
+            extraFilesSpigot.addAll(generateMetadata.getMetadataFilesSpigot().stream().map(Path::toString).collect(Collectors.toSet()));
+
+            Set<String> extraFilesBungee = new HashSet<>();
+            extraFilesBungee.add(targetBungee.toString());
+            extraFilesBungee.addAll(generateMetadata.getMetadataFilesBungee().stream().map(Path::toString).collect(Collectors.toSet()));
 
             args.add("-A" + AnnotationProcessor.EXTRA_FILES_SPIGOT_OPTION + "=" + Joiner.on(';').skipNulls().join(extraFilesSpigot));
             args.add("-A" + AnnotationProcessor.EXTRA_FILES_BUNGEE_OPTION + "=" + Joiner.on(';').skipNulls().join(extraFilesBungee));
-
-            args.add("-A" + AnnotationProcessor.OUTPUT_FILE_SPIGOT_OPTION + "=" + targetSpigot.toString());
-            args.add("-A" + AnnotationProcessor.OUTPUT_FILE_BUNGEE_OPTION + "=" + targetBungee.toString());
         });
 
-        project.getTasks().getByName("processResources").dependsOn(compileJava);
+        Task processResources = project.getTasks().getByName("processResources");
+        CopySpec processResourcesCopySepc = (CopySpec) processResources;
+        processResourcesCopySepc.exclude(PluginYml.FILENAME_SPIGOT);
+        processResourcesCopySepc.exclude(PluginYml.FILENAME_BUNGEE);
     }
 }
