@@ -1,7 +1,7 @@
 /**
  *
  * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
-Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -39,7 +39,7 @@ public class SpigotGradle {
 
     /**
      * Resolves the given {@link Object} to an {@link String}.
-     * 
+     *
      * @param object The {@link Object} to process
      * @return The resolved {@link String}
      */
@@ -58,7 +58,7 @@ public class SpigotGradle {
 
     /**
      * Resolves the given {@link Object} to an {@link Boolean}.
-     * 
+     *
      * @param object The {@link Object} to process
      * @return The resolved {@link Boolean}
      */
@@ -77,7 +77,7 @@ public class SpigotGradle {
 
     /**
      * Resolves the given {@link Object} to the enum {@link LoadOn}.
-     * 
+     *
      * @param object The {@link Object} to process
      * @return The resolved enum {@link LoadOn}
      */
@@ -99,7 +99,7 @@ public class SpigotGradle {
 
     /**
      * Resolves the given {@link Object} to the enum {@link DependencyType}.
-     * 
+     *
      * @param object The {@link Object} to process
      * @return The resolved enum {@link DependencyType}
      */
@@ -121,7 +121,7 @@ public class SpigotGradle {
 
     /**
      * Resolves the given {@link Object} to the enum {@link PermissionDefault}.
-     * 
+     *
      * @param object The {@link Object} to process
      * @return The resolved enum {@link PermissionDefault}
      */
@@ -143,7 +143,7 @@ public class SpigotGradle {
 
     /**
      * Resolves the given {@link Object} to an {@link List}.
-     * 
+     *
      * @param <T> The type of the list
      * @param object The {@link Object} to process
      * @return The resolved {@link List}
@@ -164,7 +164,7 @@ public class SpigotGradle {
 
     /**
      * Gets the {@link Manifest} of the current jar.
-     * 
+     *
      * @return The {@link Manifest}
      */
     public static Manifest getManifest() {

@@ -1,7 +1,7 @@
 /**
  *
  * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
-Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -31,9 +31,12 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
+import org.gradle.util.GradleVersion;
 
 import java.util.Calendar;
 import java.util.List;
@@ -61,9 +64,9 @@ public class SpigotGradlePlugin implements Plugin<Project> {
 
     private void applyPlugins() {
         PluginContainer plugins = _project.getPlugins();
-        plugins.apply("java");
-        plugins.apply("eclipse");
-        plugins.apply("idea");
+        plugins.apply(JavaPlugin.class);
+        plugins.apply(EclipsePlugin.class);
+        plugins.apply(IdeaPlugin.class);
     }
 
     private void applyJava8() {
@@ -77,7 +80,13 @@ public class SpigotGradlePlugin implements Plugin<Project> {
         repositories.add(repositories.jcenter());
 
         DependencyHandler dependencies = _project.getDependencies();
-        dependencies.add("compileOnly", "eu.hexagonmc:spigot-annotations:1.0");
+        dependencies.add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, "eu.hexagonmc:spigot-annotations:1.1");
+
+        boolean annotationProcessorConfigurationAvailable =
+                GradleVersion.version(_project.getGradle().getGradleVersion()).compareTo(GradleVersion.version("4.6")) >= 0;
+        if (annotationProcessorConfigurationAvailable) {
+            dependencies.add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, "eu.hexagonmc:spigot-annotations:1.1");
+        }
     }
 
     private void applyCustomPlugins() {

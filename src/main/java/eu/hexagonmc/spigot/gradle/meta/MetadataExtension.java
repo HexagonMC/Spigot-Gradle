@@ -1,7 +1,7 @@
 /**
  *
  * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
-Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -45,7 +45,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Creates a new extension for the given project.
-     * 
+     *
      * @param project The project
      */
     MetadataExtension(Project project) {
@@ -74,7 +74,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Sets the main class of this plugin.
-     * 
+     *
      * @param main The main class to set
      */
     public void main(Object main) {
@@ -83,7 +83,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Gets the main class set for this plugin.
-     * 
+     *
      * @return The main class set
      */
     public String main() {
@@ -92,7 +92,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Sets the name of this plugin.
-     * 
+     *
      * @param name The name to set
      */
     public void name(Object name) {
@@ -101,7 +101,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Gets the name set for this plugin.
-     * 
+     *
      * @return The name set
      */
     public String name() {
@@ -110,7 +110,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Gets the name set for this plugin.
-     * 
+     *
      * @return The name set
      */
     public String getName() {
@@ -119,7 +119,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Sets the version of this plugin.
-     * 
+     *
      * @param version The version to set
      */
     public void version(Object version) {
@@ -128,7 +128,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Gets the version set for this plugin.
-     * 
+     *
      * @return The version set
      */
     public String version() {
@@ -137,7 +137,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Sets the description of this plugin.
-     * 
+     *
      * @param description The description to set
      */
     public void description(Object description) {
@@ -146,7 +146,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Gets the description set for this plugin.
-     * 
+     *
      * @return The description set
      */
     public String description() {
@@ -155,7 +155,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Sets the dependencies of this plugin. Resolved by {@link Closure}.
-     * 
+     *
      * @param closure The {@link Closure} with dependencies
      */
     public void dependencies(Closure<?> closure) {
@@ -164,7 +164,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Gets the dependencies set for this plugin.
-     * 
+     *
      * @return The dependencies set
      */
     public Set<Dependency> dependencies() {
@@ -173,7 +173,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Adds a dependency to this plugin.
-     * 
+     *
      * @param name The name of the dependency
      */
     public void dependency(String name) {
@@ -182,7 +182,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Adds a dependency to this plugin.
-     * 
+     *
      * @param name The name of the dependency
      * @param type The type of the dependency
      */
@@ -192,7 +192,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
     /**
      * Adds a dependency to this plugin. Resolved by {@link Closure}.
-     * 
+     *
      * @param name The name of the dependency
      * @param closure The {@link Closure} of the dependency
      */
@@ -224,7 +224,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
         /**
          * Creates a new plugin dependency with the given name.
-         * 
+         *
          * @param name The name
          */
         Dependency(String name) {
@@ -233,7 +233,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
         /**
          * Gets the name set for this dependency.
-         * 
+         *
          * @return The name set
          */
         public String name() {
@@ -242,7 +242,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
         /**
          * Gets the name set for this dependency.
-         * 
+         *
          * @return The name set
          */
         public String getName() {
@@ -251,7 +251,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
         /**
          * Sets the type of this dependency.
-         * 
+         *
          * @param type The type to set
          */
         public void type(Object type) {
@@ -260,7 +260,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
         /**
          * Gets the type set for this dependency.
-         * 
+         *
          * @return The type set
          */
         public DependencyType type() {
@@ -269,7 +269,7 @@ public class MetadataExtension implements Consumer<PluginMetadata> {
 
         /**
          * Builds a {@link PluginDependency} of this extension.
-         * 
+         *
          * @return The {@link PluginDependency}
          */
         public PluginDependency build() {

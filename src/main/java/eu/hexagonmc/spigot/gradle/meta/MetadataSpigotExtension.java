@@ -1,7 +1,7 @@
 /**
  *
  * Copyright (C) 2017 - 2018  HexagonMc <https://github.com/HexagonMC>
-Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
+ * Copyright (C) 2017 - 2018  Zartec <zartec@mccluster.eu>
  *
  *     This file is part of Spigot-Gradle.
  *
@@ -52,7 +52,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Creates a new extension for the given project.
-     * 
+     *
      * @param project The project
      */
     public MetadataSpigotExtension(Project project) {
@@ -77,7 +77,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Sets the load stage for this plugin.
-     * 
+     *
      * @param load The load stage to set
      * @see LoadOn
      */
@@ -87,7 +87,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets the load stage set for this plugin.
-     * 
+     *
      * @return The load stage set
      * @see LoadOn
      */
@@ -97,7 +97,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Adds an author to this plugin.
-     * 
+     *
      * @param author The author to add
      */
     public void author(Object author) {
@@ -106,7 +106,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets the authors of this plugin.
-     * 
+     *
      * @return The authors
      * @see List
      */
@@ -116,7 +116,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Sets the website for this plugin.
-     * 
+     *
      * @param website The website to set
      */
     public void website(Object website) {
@@ -125,7 +125,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets the website set for this plugin.
-     * 
+     *
      * @return The website set
      */
     public String website() {
@@ -134,7 +134,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Sets if this plugin uses database.
-     * 
+     *
      * @param database True if database is used false otherwise
      */
     public void database(Object database) {
@@ -143,7 +143,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets if this plugin uses database.
-     * 
+     *
      * @return True if database is used false otherwise
      */
     public Boolean database() {
@@ -152,7 +152,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Sets the logging prefix for this plugin.
-     * 
+     *
      * @param prefix The logging prefix to set
      */
     public void prefix(Object prefix) {
@@ -161,7 +161,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets the logging prefix set for this plugin.
-     * 
+     *
      * @return The logging prefix set
      */
     public String prefix() {
@@ -170,7 +170,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Sets the commands of this plugin. Resolved by {@link Closure}.
-     * 
+     *
      * @param closure The {@link Closure} with commands
      */
     public void commands(Closure<?> closure) {
@@ -179,7 +179,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets the commands set for this plugin.
-     * 
+     *
      * @return The commands set
      */
     public Set<Command> commands() {
@@ -188,7 +188,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Adds a command to this plugin.
-     * 
+     *
      * @param name The name of the command
      */
     public void command(String name) {
@@ -197,7 +197,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Adds a command to this plugin. Resolved by {@link Closure}.
-     * 
+     *
      * @param name The name of the command
      * @param closure The {@link Closure} of the command
      */
@@ -207,7 +207,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Sets the permissions of this plugin. Resolved by {@link Closure}.
-     * 
+     *
      * @param closure The {@link Closure} with permissions
      */
     public void permissions(Closure<?> closure) {
@@ -216,7 +216,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Gets the permissions set for this plugin.
-     * 
+     *
      * @return The permissions set
      */
     public Set<Permission> permissions() {
@@ -225,7 +225,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Adds a permission to this plugin.
-     * 
+     *
      * @param name The name of the permission
      */
     public void permission(String name) {
@@ -234,7 +234,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
     /**
      * Adds a permission to this plugin. Resolved by {@link Closure}.
-     * 
+     *
      * @param name The name of the permission
      * @param closure The {@link Closure} of the permission
      */
@@ -272,7 +272,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Creates a new plugin command with the given name.
-         * 
+         *
          * @param name The name
          */
         Command(String name) {
@@ -281,7 +281,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the name set for this dependency.
-         * 
+         *
          * @return The name set
          */
         public String name() {
@@ -290,7 +290,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the name set for this dependency.
-         * 
+         *
          * @return The name set
          */
         public String getName() {
@@ -299,7 +299,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Sets the description of this command.
-         * 
+         *
          * @param description The description to set
          */
         public void description(Object description) {
@@ -308,7 +308,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the description set for this command.
-         * 
+         *
          * @return The description set
          */
         public String description() {
@@ -317,7 +317,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Adds an alias to this command.
-         * 
+         *
          * @param alias The alias to add
          */
         public void alias(Object alias) {
@@ -326,7 +326,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the usage set for this command.
-         * 
+         *
          * @return The usage set
          */
         public List<String> aliases() {
@@ -335,7 +335,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Sets the permission of this command.
-         * 
+         *
          * @param permission The permission to set
          */
         public void permission(Object permission) {
@@ -344,7 +344,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the permission set for this command.
-         * 
+         *
          * @return The permission set
          */
         public String permission() {
@@ -353,7 +353,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Sets the usage of this command.
-         * 
+         *
          * @param usage The usage to set
          */
         public void usage(Object usage) {
@@ -362,7 +362,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the usage set for this command.
-         * 
+         *
          * @return The usage set
          */
         public String usage() {
@@ -371,7 +371,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Builds a {@link PluginCommand} of this extension.
-         * 
+         *
          * @return The {@link PluginCommand}
          */
         public PluginCommand build() {
@@ -394,7 +394,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Creates a new plugin permission with the given name.
-         * 
+         *
          * @param name The name
          */
         Permission(Project project, String name) {
@@ -405,7 +405,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the name set for this permission.
-         * 
+         *
          * @return The name set
          */
         public String name() {
@@ -414,7 +414,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the name set for this permission.
-         * 
+         *
          * @return The name set
          */
         public String getName() {
@@ -423,7 +423,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Sets the description of this permission.
-         * 
+         *
          * @param description The description to set
          */
         public void description(Object description) {
@@ -432,7 +432,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the description set for this permission.
-         * 
+         *
          * @return The description set
          */
         public String description() {
@@ -441,7 +441,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Sets the default value of this permission.
-         * 
+         *
          * @param value The default value to set
          */
         public void value(Object value) {
@@ -450,7 +450,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the default value set for this permission.
-         * 
+         *
          * @return The default value set
          */
         public PermissionDefault value() {
@@ -459,7 +459,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Sets the childs of this permission. Resolved by {@link Closure}.
-         * 
+         *
          * @param closure The {@link Closure} with childs
          */
         public void childs(Closure<?> closure) {
@@ -468,7 +468,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Gets the childs set for this permission.
-         * 
+         *
          * @return The childs set
          */
         public Set<Child> childs() {
@@ -477,7 +477,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Adds a child to this permission.
-         * 
+         *
          * @param name The name of the child
          */
         public void child(String name) {
@@ -486,7 +486,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Adds a child to this permission.
-         * 
+         *
          * @param name The name of the child
          * @param value The value of the child
          */
@@ -496,7 +496,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Adds a child to this permission. Resolved by {@link Closure}.
-         * 
+         *
          * @param name The name of the child
          * @param closure The {@link Closure} of the child
          */
@@ -506,7 +506,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
         /**
          * Builds a {@link PluginPermission} of this extension.
-         * 
+         *
          * @return The {@link PluginPermission}
          */
         public PluginPermission build() {
@@ -526,7 +526,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
             /**
              * Creates a new plugin permission child with the given name.
-             * 
+             *
              * @param name The name
              */
             Child(String name) {
@@ -535,7 +535,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
             /**
              * Gets the name set for this permission child.
-             * 
+             *
              * @return The name set
              */
             public String name() {
@@ -544,7 +544,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
             /**
              * Gets the name set for this permission child.
-             * 
+             *
              * @return The name set
              */
             public String getName() {
@@ -553,7 +553,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
             /**
              * Sets the default value of this permission child.
-             * 
+             *
              * @param value The default value to set
              */
             public void value(Object value) {
@@ -562,7 +562,7 @@ public class MetadataSpigotExtension extends MetadataExtension {
 
             /**
              * Gets the default value set for this permission child.
-             * 
+             *
              * @return The default value set
              */
             public Boolean value() {

@@ -7,7 +7,7 @@ if (year != Integer.valueOf(project.year)) {
 def copyrightFormat = "Copyright (C) %s  %s <%s>"
 def copyright = String.format(copyrightFormat, year, project.organization, project.organization_url)
 for (def developer : project.developers) {
-    copyright += '\n' + String.format(copyrightFormat, year, developer.name, developer.email)
+    copyright += '\n * ' + String.format(copyrightFormat, year, developer.name, developer.email)
 }
 
 license {
