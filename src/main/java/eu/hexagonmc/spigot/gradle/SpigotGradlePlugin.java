@@ -80,12 +80,12 @@ public class SpigotGradlePlugin implements Plugin<Project> {
         repositories.add(repositories.jcenter());
 
         DependencyHandler dependencies = _project.getDependencies();
-        dependencies.add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, "eu.hexagonmc:spigot-annotations:1.1");
+        dependencies.add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, "eu.hexagonmc:spigot-annotations:1.2");
 
         boolean annotationProcessorConfigurationAvailable =
                 GradleVersion.version(_project.getGradle().getGradleVersion()).compareTo(GradleVersion.version("4.6")) >= 0;
         if (annotationProcessorConfigurationAvailable) {
-            dependencies.add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, "eu.hexagonmc:spigot-annotations:1.1");
+            dependencies.add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, "eu.hexagonmc:spigot-annotations:1.2");
         }
     }
 

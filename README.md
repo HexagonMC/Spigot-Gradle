@@ -158,7 +158,7 @@ buildscript {
     }
     ...
     dependencies {
-        classpath group: 'eu.hexagonmc', name: 'spigot-gradle', version: '1.2'
+        classpath group: 'eu.hexagonmc', name: 'spigot-gradle', version: '1.3'
     }
 }
 ...
@@ -179,7 +179,7 @@ Apply the plugin in your `build.gradle`.
 ```gradle
 ...
 plugins {
-    id "eu.hexagonmc.gradle.spigot" version "1.2"
+    id "eu.hexagonmc.gradle.spigot" version "1.3"
 }
 ...
 ```
